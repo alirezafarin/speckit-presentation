@@ -1,0 +1,1465 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GitHub Spec Kit — ارائه تعاملی</title>
+    <meta
+      name="description"
+      content="ارائه فارسی و تعاملی درباره GitHub Spec Kit: CLI، فرمان‌ها، آرتیفکت‌ها و گردش‌کار Spec-Driven Development."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true">
+      <div class="progress__bar" id="progress"></div>
+    </div>
+    <div class="sr-only" id="slide-live" aria-live="polite"></div>
+
+    <button type="button" class="nav-btn lang-btn" id="lang-toggle">English</button>
+
+    <main class="deck" id="deck">
+      <div class="lang-deck is-active" data-lang="fa">
+      <section
+        class="slide is-active"
+        data-slide="1"
+        aria-labelledby="s1-title"
+      >
+        <p class="kicker">بعد از مبانی SDD</p>
+        <h1 id="s1-title">Spec Kit ابزار اجرای مشخصات است، نه فقط یک ایده</h1>
+        <p class="lede">
+          در جلسه قبل فلسفه Spec-Driven Development را دیدیم: مشخصات منبع حقیقت
+          می‌شوند و کد بیان آن‌هاست. این جلسه روی
+          <strong>GitHub Spec Kit</strong> تمرکز دارد؛ toolkit متن‌بازی که همان
+          فلسفه را با CLI، template و slash command پیاده می‌کند.
+        </p>
+        <div class="title-meta" aria-label="Presentation Metadata">
+          <span class="badge">۱۷ صفحه تعاملی</span>
+          <span class="badge">فارسی / RTL</span>
+          <span class="badge">منبع: github/spec-kit</span>
+        </div>
+        <div class="grid grid-3">
+          <article class="card">
+            <h3>فلسفه</h3>
+            <p>
+              قبل از build، define کن. مشخصات executable هستند، نه سند
+              دورریختنی.
+            </p>
+          </article>
+          <article class="card">
+            <h3>ابزار</h3>
+            <p>
+              <code>specify</code> پروژه را به agent وصل می‌کند و آرتیفکت‌های
+              استاندارد می‌سازد.
+            </p>
+          </article>
+          <article class="card">
+            <h3>همگرایی</h3>
+            <p>
+              با <code>/speckit.converge</code> پیاده‌سازی را با spec و plan
+              تراز می‌کنید تا گزارش Converged برسد.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="2" aria-labelledby="s2-title">
+        <p class="kicker">Spec Kit چیست؟</p>
+        <h2 id="s2-title">toolkit آماده برای هر AI coding agent</h2>
+        <p class="lede">
+          Spec Kit یک فرآیند مشخص‌محور آماده است — یا فرآیند خودتان را می‌آورید.
+          قابل‌گسترش، جامعه‌محور، و برای کل سازمان طراحی شده است.
+        </p>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>SDD عمومی</h3>
+            <p>
+              وارونگی قدرت: مشخصات بر کد حاکم می‌شود. قابل‌اجرا با هر دستیار AI،
+              اگر انضباط داشته باشید.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Spec Kit</h3>
+            <p>
+              پیاده‌سازی عملی همان ایده: CLI، template، فرمان‌های هسته،
+              extension، preset و bundle.
+            </p>
+          </article>
+          <article class="card">
+            <h3>استقلال از تکنولوژی</h3>
+            <p>
+              فرض پروژه این است که SDD به زبان، فریم‌ورک یا stack خاصی گره
+              نخورده است.
+            </p>
+          </article>
+          <article class="card">
+            <h3>نسخه ۱.۰</h3>
+            <p>
+              پروژه به ۱.۰ رسیده؛ ارزش از «پایداری منجمد» به
+              <strong>adaptability</strong> منتقل شده است. شماره دقیق release را
+              از صفحه Releases بخوانید.
+            </p>
+          </article>
+        </div>
+        <p class="note">
+          منبع: README رسمی و
+          <a
+            href="https://github.com/github/spec-kit/blob/main/spec-driven.md"
+            dir="ltr"
+            >spec-driven.md</a
+          >
+        </p>
+      </section>
+
+      <section class="slide" data-slide="3" aria-labelledby="s3-title">
+        <p class="kicker">نصب</p>
+        <h2 id="s3-title">پیش‌نیازها، CLI و <code>specify init</code></h2>
+        <p class="lede">
+          پیش‌نیاز: Linux / macOS / Windows، Python 3.11+، Git، و
+          <a href="https://docs.astral.sh/uv/" dir="ltr">uv</a> (یا pipx). سپس
+          CLI را نصب و پروژه را initialize کنید.
+        </p>
+        <pre dir="ltr">
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@vX.Y.Z
+# یا از PyPI:
+uv tool install specify-cli
+
+specify init my-project --integration copilot
+cd my-project
+
+specify self check
+specify self upgrade --dry-run
+specify self upgrade</pre
+        >
+        <div class="grid grid-2" style="margin-top: 0.9rem">
+          <article class="card">
+            <h3>پین نسخه</h3>
+            <p>
+              به‌جای <code>vX.Y.Z</code> آخرین tag را از
+              <a href="https://github.com/github/spec-kit/releases" dir="ltr"
+                >Releases</a
+              >
+              بگذارید و حرف <code>v</code> را نگه دارید.
+            </p>
+          </article>
+          <article class="card">
+            <h3>CI و harness</h3>
+            <p>
+              <code>specify init --non-interactive --ignore-agent-tools</code>
+              تا picker کیبورد گیر نکند. برای پوشه غیرخالی:
+              <code>--here --force</code>.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="4" aria-labelledby="s4-title">
+        <p class="kicker">Agentها</p>
+        <h2 id="s4-title">۳۰+ integration؛ شکل فرمان یکسان نیست</h2>
+        <p class="lede">
+          Spec Kit با ده‌ها CLI و IDE کار می‌کند. فهرست کامل نسخه نصب‌شده را با
+          <code>specify integration list</code> ببینید.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>محیط</th>
+                <th>شکل فرمان</th>
+                <th>نکته</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>اکثر agentها</td>
+                <td dir="ltr"><code>/speckit.specify</code></td>
+                <td>نقطه بین نام‌ها</td>
+              </tr>
+              <tr>
+                <td>Codex CLI / skills mode</td>
+                <td dir="ltr"><code>$speckit-specify</code></td>
+                <td>خط تیره و پیشوند دلار</td>
+              </tr>
+              <tr>
+                <td>GitHub Copilot CLI</td>
+                <td dir="ltr"><code>/agents</code> یا prompt مستقیم</td>
+                <td>انتخاب agent جداست</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">
+          README گاهی خط تیره و گاهی نقطه نشان می‌دهد. قبل از دمو، فرمان دقیق را
+          در agent خودتان بررسی کنید. Skills با
+          <code>--integration-options="--skills"</code> نصب می‌شوند.
+        </p>
+      </section>
+
+      <section class="slide" data-slide="5" aria-labelledby="s5-title">
+        <p class="kicker">گردش‌کار هسته</p>
+        <h2 id="s5-title">از Constitution تا Converge</h2>
+        <p class="lede">
+          گام‌ها را یکی‌یکی جلو ببرید. حلقهٔ implement و converge تا گزارش
+          <strong>Converged</strong> تکرار می‌شود.
+        </p>
+        <div class="workflow">
+          <div class="workflow__steps" data-role="workflow-steps"></div>
+          <p class="workflow__detail" data-role="workflow-detail"></p>
+          <div class="workflow__controls">
+            <button type="button" class="ghost" data-workflow="prev">
+              گام قبل
+            </button>
+            <button type="button" class="ghost" data-workflow="next">
+              گام بعد
+            </button>
+            <button type="button" class="ghost" data-workflow="reset">
+              از ابتدا
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="6" aria-labelledby="s6-title">
+        <p class="kicker">فرمان‌های اصلی</p>
+        <h2 id="s6-title">هسته گردش‌کار چه چیزی می‌سازد؟</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>فرمان</th>
+                <th>Skill</th>
+                <th>کار</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td dir="ltr"><code>/speckit.constitution</code></td>
+                <td dir="ltr"><code>speckit-constitution</code></td>
+                <td>اصول حاکم پروژه — یک‌بار برای هر پروژه</td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>/speckit.specify</code></td>
+                <td dir="ltr"><code>speckit-specify</code></td>
+                <td>WHAT و WHY؛ spec + branch + شماره feature</td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>/speckit.plan</code></td>
+                <td dir="ltr"><code>speckit-plan</code></td>
+                <td>HOW: پشته فنی و معماری</td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>/speckit.tasks</code></td>
+                <td dir="ltr"><code>speckit-tasks</code></td>
+                <td>لیست کارهای قابل‌اجرا</td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>/speckit.taskstoissues</code></td>
+                <td dir="ltr"><code>speckit-taskstoissues</code></td>
+                <td>تبدیل tasks به GitHub Issues</td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>/speckit.implement</code></td>
+                <td dir="ltr"><code>speckit-implement</code></td>
+                <td>اجرای tasks طبق plan</td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>/speckit.converge</code></td>
+                <td dir="ltr"><code>speckit-converge</code></td>
+                <td>فاصله با spec/plan/tasks و افزودن کار باقی‌مانده</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="7" aria-labelledby="s7-title">
+        <p class="kicker">دروازه‌های کیفیت</p>
+        <h2 id="s7-title">Clarify، Analyze و Checklist</h2>
+        <div class="grid grid-3" style="margin-bottom: 0.9rem">
+          <article class="card">
+            <h3>Clarify</h3>
+            <p>
+              قبل از plan. نواحی مبهم را می‌پرسد. قبلاً
+              <code>/quizme</code> بود.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Analyze</h3>
+            <p>بعد از tasks و قبل از implement. سازگاری و پوشش بین‌آرتیفکتی.</p>
+          </article>
+          <article class="card">
+            <h3>Checklist</h3>
+            <p>هر زمان. «unit test برای زبان انگلیسی» روی خودِ مشخصات.</p>
+          </article>
+        </div>
+        <div
+          class="quiz"
+          data-quiz="clarify"
+          data-explain="Clarify باید قبل از plan اجرا شود تا ابهام‌ها وارد تصمیم تکنولوژی نشوند."
+        >
+          <h3>سؤال ۱ — زمان Clarify؟</h3>
+          <div class="options">
+            <button type="button" class="option" data-correct="true">
+              قبل از <span dir="ltr"><code>/speckit.plan</code></span>
+            </button>
+            <button type="button" class="option">
+              بعد از <span dir="ltr"><code>/speckit.implement</code></span>
+            </button>
+            <button type="button" class="option">فقط وقتی CI شکست بخورد</button>
+          </div>
+          <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
+        <div
+          class="quiz"
+          data-quiz="analyze"
+          data-explain="Analyze بعد از tasks و قبل از implement، سازگاری آرتیفکت‌ها را می‌سنجد."
+          style="margin-top: 0.8rem"
+        >
+          <h3>سؤال ۲ — Analyze کجا می‌نشیند؟</h3>
+          <div class="options">
+            <button type="button" class="option">قبل از specify</button>
+            <button type="button" class="option" data-correct="true">
+              بعد از tasks و قبل از implement
+            </button>
+            <button type="button" class="option">جایگزین converge است</button>
+          </div>
+          <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="8" aria-labelledby="s8-title">
+        <p class="kicker">Constitution</p>
+        <h2 id="s8-title">
+          DNA معماری پروژه در <code>memory/constitution.md</code>
+        </h2>
+        <p class="lede">
+          constitution فایلی است که قوانین ثابت پروژه را نگه می‌دارد. agent قبل
+          از هر plan آن را می‌خواند و plan باید بخش Constitutional Compliance را
+          پاس کند. همه مثال‌های زیر روی همان فیچر onboarding اسلاید ۱۶ است.
+        </p>
+        <div class="grid grid-2">
+          <div class="article-list" data-role="articles">
+            <button type="button" class="is-open" data-article="1">
+              ماده I — Library-First
+            </button>
+            <p>
+              <span class="rule"
+                >منطق فیچر اول در یک پکیج مستقل نوشته می‌شود تا بدون UI هم قابل
+                تست و استفاده باشد.</span
+              >
+              <span class="example" dir="ltr">
+                <span class="yes">درست:</span> packages/onboarding →
+                nextStep(), validateStep()<br />
+                <span class="no">نادرست:</span>
+                apps/web/app/onboarding/page.tsx → nextStep()
+              </span>
+            </p>
+            <button type="button" data-article="2">
+              ماده II — CLI Interface
+            </button>
+            <p>
+              <span class="rule"
+                >همان پکیج باید از ترمینال هم اجرا شود تا رفتارش بدون مرورگر
+                قابل بازرسی باشد: ورودی و خروجی متنی و JSON.</span
+              >
+              <span class="example" dir="ltr">
+                onboarding-cli validate --json &lt; profile.json
+              </span>
+            </p>
+            <button type="button" data-article="3">
+              ماده III — Test-First <span class="pill">NON-NEGOTIABLE</span>
+            </button>
+            <p>
+              <span class="rule"
+                >اول تست نوشته و تأیید می‌شود و باید شکست بخورد؛ بعد کد نوشته
+                می‌شود.</span
+              >
+              <span class="example" dir="ltr">
+                1. onboarding.test.ts →
+                expect(nextStep('PROFILE')).toBe('PREFERENCES') → FAIL<br />
+                2. nextStep() → PASS
+              </span>
+            </p>
+            <button type="button" data-article="4">
+              ماده IV — مرزهای Turborepo <span class="pill">پروژه‌ای</span>
+            </button>
+            <p>
+              <span class="rule"
+                >کامپوننتی که بیش از یک اپ لازم دارد به پکیج مشترک می‌رود؛
+                کامپوننت مختص یک اپ داخل همان اپ می‌ماند.</span
+              >
+              <span class="example" dir="ltr">
+                <span class="yes">درست:</span> packages/ui/src/Stepper.tsx →
+                apps/web + apps/admin<br />
+                <span class="no">نادرست:</span>
+                apps/web/components/Stepper.tsx +
+                apps/admin/components/Stepper.tsx
+              </span>
+            </p>
+            <button type="button" data-article="5">
+              ماده V — جداسازی RSC و Client
+              <span class="pill">پروژه‌ای</span>
+            </button>
+            <p>
+              <span class="rule"
+                >واکشی داده در Server Component انجام می‌شود و
+                <code>'use client'</code> فقط به کامپوننت برگِ تعاملی می‌رسد.</span
+              >
+              <span class="example" dir="ltr">
+                <span class="yes">درست:</span> app/onboarding/page.tsx → await
+                getOnboardingState()<br />
+                <span class="yes">درست:</span> OnboardingForm.tsx → 'use
+                client'<br />
+                <span class="no">نادرست:</span> app/onboarding/page.tsx → 'use
+                client'
+              </span>
+            </p>
+          </div>
+          <div
+            class="quiz"
+            data-quiz="constitution"
+            data-explain="مسیر رسمی: memory/constitution.md — یک‌بار برای هر پروژه."
+          >
+            <h3>سؤال ۳ — Constitution کجا ذخیره می‌شود؟</h3>
+            <div class="options">
+              <button type="button" class="option">
+                <span dir="ltr"><code>specs/constitution.md</code></span>
+              </button>
+              <button type="button" class="option" data-correct="true">
+                <span dir="ltr"><code>memory/constitution.md</code></span>
+              </button>
+              <button type="button" class="option">
+                <span dir="ltr"><code>.github/CONSTITUTION.md</code></span>
+              </button>
+            </div>
+            <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+          </div>
+        </div>
+        <p class="note">
+          مواد I تا III از template خود Spec Kit می‌آید و مواد IV به بعد را تیم
+          شما می‌نویسد. اگر plan یکی از این قوانین را نقض کند، در Phase -1
+          (دروازه‌های Simplicity، Anti-Abstraction و Integration-First) متوقف
+          می‌شود و agent باید دلیلش را در Complexity Tracking بنویسد.
+        </p>
+      </section>
+
+      <section class="slide" data-slide="9" aria-labelledby="s9-title">
+        <p class="kicker">Specify</p>
+        <h2 id="s9-title">چه چیزی خودکار ساخته می‌شود؟</h2>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>اتوماسیون مخزن</h3>
+            <p>
+              شماره feature بعدی (۰۰۱، ۰۰۲، … تا بیش از ۱۰۰۰)، branch معنایی مثل
+              <code>003-chat-system</code>، و
+              <code>specs/[branch]/spec.md</code> از روی template.
+            </p>
+          </article>
+          <article class="card">
+            <h3>قواعد template</h3>
+            <p>
+              تمرکز روی WHAT و WHY. بدون tech stack و ساختار کد. ابهام با
+              <code>[NEEDS CLARIFICATION: سؤال]</code>. چک‌لیست خودبازبینی برای
+              کامل بودن و testability.
+            </p>
+          </article>
+        </div>
+        <pre dir="ltr" style="margin-top: 0.9rem">
+/speckit.specify Build a photo album app grouped by date,
+drag-and-drop reorder, tile preview, no nested albums</pre
+        >
+      </section>
+
+      <section class="slide" data-slide="10" aria-labelledby="s10-title">
+        <p class="kicker">Plan، Tasks و فایل‌ها</p>
+        <h2 id="s10-title">کالبدشکافی آرتیفکت‌ها</h2>
+        <p class="lede">
+          روی هر گره کلیک کنید تا نقش فایل را ببینید. Plan معمولاً
+          <code>plan.md</code>، <code>research.md</code>،
+          <code>data-model.md</code>، <code>contracts/</code> و
+          <code>quickstart.md</code> می‌سازد. Tasks از آن‌ها
+          <code>tasks.md</code> با علامت <code>[P]</code> برای کار موازی
+          می‌سازد.
+        </p>
+        <div class="tree-layout">
+          <div class="tree" data-role="tree" data-tree="artifacts" dir="ltr"></div>
+          <article class="tree-detail card" data-role="tree-detail">
+            <h3>یک گره را انتخاب کنید</h3>
+            <p>
+              ساختار Spec Kit از tooling در <code>.specify/</code> و intent در
+              <code>specs/</code> جداست.
+            </p>
+            <hr style="margin: 1rem 0" />
+            <h4
+              style="
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+                text-align: right;
+              "
+            >
+              نمونه Contract (data-model)
+            </h4>
+            <pre
+              dir="ltr"
+              style="
+                font-size: 0.8rem;
+                padding: 0.5rem;
+                text-align: left;
+                background: #1a1a1a;
+                color: #f8f8f2;
+                border-radius: 4px;
+              "
+            ><code>export enum EOnboardingStep {
+  PROFILE = 'PROFILE',
+  PREFERENCES = 'PREFERENCES'
+}
+
+export type TOnboardingState = {
+  currentStep: EOnboardingStep;
+  isComplete: boolean;
+}
+
+export interface IOnboardingStore {
+  state: TOnboardingState;
+  setStep: (step: EOnboardingStep) => void;
+}</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="11" aria-labelledby="s11-title">
+        <p class="kicker">پوشه نصب</p>
+        <h2 id="s11-title">
+          داخل <code>.specify/</code> دقیقاً چه چیزی نصب شده است؟
+        </h2>
+        <p class="lede">
+          <code>.specify/</code> پوشهٔ نصب Spec Kit است، نه spec محصول. روی هر
+          گره کلیک کنید تا نقش واقعی آن فایل را ببینید. این درخت از نصب واقعی
+          همین پروژه گرفته شده است: نسخهٔ ۱.۰.۴، ایجنت cursor-agent، اسکریپت
+          bash.
+        </p>
+        <div class="tree-layout">
+          <div
+            class="tree tree--scroll"
+            data-role="tree"
+            data-tree="install"
+            dir="ltr"
+          ></div>
+          <article class="tree-detail card" data-role="tree-detail">
+            <h3>یک فایل را انتخاب کنید</h3>
+            <p>این پوشه چهار دستهٔ کاملاً متفاوت دارد:</p>
+            <ul class="clean">
+              <li>پیکربندی نصب در ریشه: چه چیزی و برای کدام ایجنت نصب شده</li>
+              <li>قانون پروژه در <code>memory/</code></li>
+              <li>قالب‌های خالی در <code>templates/</code></li>
+              <li>اسکریپت‌های اجرایی در <code>scripts/bash/</code></li>
+            </ul>
+            <p>دو مانیفست هم فقط رسید نصب هستند.</p>
+          </article>
+        </div>
+        <p class="note">
+          نکتهٔ مهم برای این تیم: چون <code>invoke_separator</code> در
+          <code>integration.json</code> برابر <code>-</code> است، فرمان‌های ما
+          <code>/speckit-specify</code> نوشته می‌شوند، در حالی که مستندات رسمی
+          <code>/speckit.specify</code> را نشان می‌دهد. کارکرد یکی است.
+        </p>
+      </section>
+
+      <section class="slide" data-slide="12" aria-labelledby="s12-title">
+        <p class="kicker">اسکریپت‌ها</p>
+        <h2 id="s12-title">
+          نیمهٔ قطعی Spec Kit: <code>scripts/bash/</code>
+        </h2>
+        <p class="lede">
+          skill کرسر متن می‌نویسد، اسکریپت‌ها مسیر می‌سازند. ایجنت آن‌ها را با
+          <code>--json</code> صدا می‌زند تا مسیر و قالب را
+          <strong>بخواند</strong>، نه اینکه نام پوشه از خودش دربیاورد.
+        </p>
+        <pre dir="ltr" style="font-size: 0.8rem">
+     you / Cursor skill  /speckit-specify, /speckit-plan, …
+runs →  .specify/scripts/bash/*.sh        create dirs, check files, resolve paths
+copies →  .specify/templates/*.md         blank markdown
+into   →    specs/001-user-auth/          spec.md · plan.md · tasks.md  ← real artifacts
+gated by →  .specify/memory/constitution.md</pre
+        >
+        <div class="table-wrap" style="margin-top: 0.9rem">
+          <table>
+            <thead>
+              <tr>
+                <th>اسکریپت</th>
+                <th>چه کسی صدا می‌زند</th>
+                <th>کاری که می‌کند</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td dir="ltr"><code>common.sh</code></td>
+                <td>همهٔ اسکریپت‌های دیگر</td>
+                <td>
+                  کتابخانهٔ مشترک: ریشه را با بالا رفتن تا دیدن
+                  <code>.specify/</code> پیدا می‌کند، فیچر جاری را از
+                  <code>SPECIFY_FEATURE</code> یا <code>feature.json</code>
+                  درمی‌آورد، مسیرها را چاپ می‌کند و قالب را با اولویت
+                  overrides → preset → extension → core حل می‌کند.
+                </td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>create-new-feature.sh</code></td>
+                <td dir="ltr"><code>/speckit-specify</code></td>
+                <td>
+                  شرح فیچر را به نام kebab تبدیل می‌کند، شمارهٔ بعدی (۰۰۱،
+                  ۰۰۲، …) را می‌زند، <code>specs/&lt;NNN-name&gt;/</code>
+                  می‌سازد، <code>spec-template.md</code> را به
+                  <code>spec.md</code> کپی و <code>feature.json</code> را
+                  می‌نویسد.
+                </td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>setup-plan.sh</code></td>
+                <td dir="ltr"><code>/speckit-plan</code></td>
+                <td>
+                  فیچر جاری را پیدا می‌کند، اگر <code>plan.md</code> نبود از
+                  قالب می‌سازد و مسیر spec و plan و branch را به‌صورت JSON
+                  برمی‌گرداند.
+                </td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>setup-tasks.sh</code></td>
+                <td dir="ltr"><code>/speckit-tasks</code></td>
+                <td>
+                  اگر <code>spec.md</code> یا <code>plan.md</code> نباشد شکست
+                  می‌خورد — نمی‌شود از فازها پرید. سندهای اختیاری موجود را
+                  فهرست می‌کند و قالب tasks را برمی‌گرداند.
+                </td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>check-prerequisites.sh</code></td>
+                <td>analyze، implement و مراحل بعدی</td>
+                <td>
+                  دروازه‌بان مشترک با پرچم‌های
+                  <code>--require-spec</code>، <code>--require-tasks</code>،
+                  <code>--include-tasks</code>، <code>--paths-only</code> و
+                  <code>--template NAME</code>. پیش‌فرض: پوشهٔ فیچر و
+                  <code>plan.md</code> باید موجود باشند.
+                </td>
+              </tr>
+              <tr>
+                <td dir="ltr"><code>resolve-template.sh</code></td>
+                <td>skillها و extensionها</td>
+                <td>
+                  پوستهٔ CLI روی <code>resolve_template_content</code>؛ قالب
+                  نام‌برده را چاپ می‌کند تا کسی منطق bash را کپی نکند.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="13" aria-labelledby="s13-title">
+        <p class="kicker">واقعیت پروژه ما</p>
+        <h2 id="s13-title">
+          <code>.specify/</code> در کنار <code>specs/</code> فعلی ما
+        </h2>
+        <p class="lede">
+          مخزن ما از قبل SDD خودش را داشت. Spec Kit یک خط لولهٔ دوم و عمومی‌تر
+          است: specify → plan → tasks → implement با دروازهٔ constitution. این
+          دو لایه هنوز روی هم منطبق نیستند.
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th dir="ltr">.specify/</th>
+                <th dir="ltr">specs/</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>مالک</td>
+                <td>CLI اسپک‌کیت</td>
+                <td>SDD محصولی خودمان</td>
+              </tr>
+              <tr>
+                <td>محتوا</td>
+                <td>اسکریپت، قالب، constitution خام، مانیفست</td>
+                <td>
+                  <code>mission.md</code>، <code>tech-stack.md</code>،
+                  <code>roadmap.md</code> و پوشهٔ فیچرها
+                </td>
+              </tr>
+              <tr>
+                <td>چیدمان فیچر</td>
+                <td dir="ltr">
+                  <code>specs/001-short-name/</code> → spec.md · plan.md ·
+                  tasks.md
+                </td>
+                <td dir="ltr">
+                  <code>specs/features/2026-09-06-…/</code> → spec.md · plan.md
+                  · validation.md
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid grid-2" style="margin-top: 0.9rem">
+          <article class="card">
+            <h3>شکافی که باید ببندیم</h3>
+            <p>
+              نصب روی <code>feature_numbering: sequential</code> تنظیم شده، ولی
+              فیچرهای موجود تاریخ‌محور و داخل <code>features/</code> هستند.
+              اسکریپت‌ها دنبال <code>specs/*</code> با پیشوند
+              <code>NNN-</code> می‌گردند، نه
+              <code>specs/features/YYYY-MM-DD-…</code>. تا وقتی این را یکی
+              نکنیم، skillهای <code>/speckit-*</code> و SDD قبلی از کنار هم رد
+              می‌شوند.
+            </p>
+          </article>
+          <article class="card">
+            <h3>قدم بعدی عملی</h3>
+            <p>
+              اول <code>.specify/memory/constitution.md</code> را پر کنید (یا
+              <code>/speckit-constitution</code> را بزنید) با قوانین واقعی
+              پروژه، تا <code>/speckit-plan</code> یک دروازهٔ واقعی داشته باشد
+              نه placeholder. بعد دربارهٔ شماره‌گذاری تصمیم بگیرید یا با
+              <code>templates/overrides/</code> قالب‌ها را به ساختار فعلی
+              نزدیک کنید.
+            </p>
+          </article>
+        </div>
+        <div
+          class="quiz"
+          data-quiz="feature-json"
+          data-explain="feature.json فقط می‌گوید همین الان روی کدام فیچر هستید؛ حالت محلی است و در git با هم‌تیمی‌ها تعارض می‌سازد."
+          style="margin-top: 0.9rem"
+        >
+          <h3>
+            سؤال — چرا <span dir="ltr"><code>.specify/feature.json</code></span>
+            در gitignore است؟
+          </h3>
+          <div class="options">
+            <button type="button" class="option" data-correct="true">
+              چون اشاره‌گر فیچر جاری روی همین ماشین است و با هر جابه‌جایی
+              بازنویسی می‌شود
+            </button>
+            <button type="button" class="option">
+              چون توکن و اطلاعات حساس ایجنت را نگه می‌دارد
+            </button>
+            <button type="button" class="option">
+              چون فقط در حالت monorepo ساخته می‌شود و بی‌مصرف است
+            </button>
+          </div>
+          <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="14" aria-labelledby="s14-title">
+        <p class="kicker">سفارشی‌سازی</p>
+        <h2 id="s14-title">Spec Kit را چطور مال تیم خودت کنی؟</h2>
+        <p class="lede">
+          <strong>Extension</strong> قابلیت جدید می‌آورد،
+          <strong>Preset</strong> شکل خروجی موجود را عوض می‌کند،
+          <strong>Bundle</strong> یک نقش تیمی را یکجا نصب می‌کند و
+          <strong>Overrides</strong> استثنای همین پروژه است. روی هرکدام بزنید تا
+          یک نمونهٔ عملی و قابل اجرا ببینید.
+        </p>
+        <div class="tabs" data-role="custom-tabs">
+          <div class="tabs__buttons" data-role="custom-buttons"></div>
+          <div class="tabs__panel" data-role="custom-panel"></div>
+        </div>
+        <p class="note">
+          همهٔ نمونه‌ها از اجزای واقعی مخزن Spec Kit گرفته شده است: extension‌های
+          bug و assess، preset‌های lean و scaffold، و bundle نمونهٔ نقش
+          product-manager.
+        </p>
+      </section>
+
+      <section class="slide" data-slide="15" aria-labelledby="s15-title">
+        <p class="kicker">مقایسه زنده</p>
+        <h2 id="s15-title">پرامپت پراکنده در برابر ردپای Spec Kit</h2>
+        <p class="lede">
+          هر بار «مرحله بعد» را بزنید تا تفاوت audit trail مشخص شود. مثال چت
+          رسمی حدود ۱۵ دقیقه آرتیفکت می‌سازد؛ مستندسازی سنتی همان کار را ساعت‌ها
+          طول می‌کشد.
+        </p>
+        <div class="compare" data-role="compare">
+          <div class="compare__lane">
+            <h3>Ad-hoc prompting</h3>
+            <ol>
+              <li data-step="0">یک پرامپت بزرگ به agent</li>
+              <li data-step="1">کد بدون spec پایدار</li>
+              <li data-step="2">جزئیات در تاریخچه چت گم می‌شود</li>
+              <li data-step="3">بازنویسی دستی وقتی نیاز عوض شود</li>
+            </ol>
+          </div>
+          <div class="compare__lane">
+            <h3>Spec Kit</h3>
+            <ol>
+              <li data-step="0">specify روی WHAT و WHY</li>
+              <li data-step="1">plan با انتخاب تکنولوژی مستند</li>
+              <li data-step="2">tasks، contracts و سناریوهای تست در branch</li>
+              <li data-step="3">implement و converge تا همگرایی</li>
+            </ol>
+          </div>
+        </div>
+        <div class="compare__controls" style="margin-top: 0.8rem">
+          <button type="button" class="ghost" data-compare="next">
+            مرحله بعد
+          </button>
+          <button type="button" class="ghost" data-compare="reset">
+            از ابتدا
+          </button>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="16" aria-labelledby="s16-title">
+        <p class="kicker">سناریوی کامل</p>
+        <h2 id="s16-title">فیچر Frontend؛ تا گزارش Converged</h2>
+        <pre dir="ltr">
+/speckit.specify Multi-step user onboarding form with Yup validation and persisted state
+/speckit.plan Next.js App Router, Zustand global store, React Hook Form
+/speckit.tasks
+/speckit.implement
+/speckit.converge</pre
+        >
+        <ul class="clean">
+          <li>
+            خروجی: spec، plan، research، data-model، contracts، quickstart،
+            tasks — همه روی feature branch.
+          </li>
+          <li>
+            تولید خودکار <code>tasks.md</code> برای ساختاردهی تست‌های ایزوله
+            کامپوننت با Cypress در کنار پیاده‌سازی UI.
+          </li>
+          <li>
+            حلقه ۴ و ۵ را تکرار کنید تا converge بگوید
+            <strong>Converged</strong>.
+          </li>
+          <li>
+            Brownfield: ارتقای tooling جدا از تغییر intent در
+            <code>specs/</code> است.
+          </li>
+        </ul>
+        <div
+          class="quiz"
+          data-quiz="converge"
+          data-explain="implement و converge را تکرار کنید تا گزارش Converged برسد."
+        >
+          <h3>سؤال ۴ — بعد از implement چه می‌کنید تا کار تمام شود؟</h3>
+          <div class="options">
+            <button type="button" class="option">مستقیماً merge به main</button>
+            <button type="button" class="option" data-correct="true">
+              <span dir="ltr"><code>/speckit.converge</code></span> را تا گزارش
+              Converged تکرار می‌کنید
+            </button>
+            <button type="button" class="option">
+              دوباره constitution می‌نویسید
+            </button>
+          </div>
+          <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="17" aria-labelledby="s17-title">
+        <p class="kicker">جمع‌بندی</p>
+        <h2 id="s17-title">فرآیند به‌علاوه tooling؛ نه فقط پرامپت بهتر</h2>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>مسیر طلایی</h3>
+            <p>
+              Constitution → Specify → [Clarify] → Plan → Tasks → [Analyze] →
+              Implement → Converge
+            </p>
+          </article>
+          <article class="card">
+            <h3>محدودیت‌ها</h3>
+            <p>
+              syntax فرمان وابسته به agent است. مواد IV–VI پروژه‌ای‌اند.
+              dogfooding همه PRها را پوشش نمی‌دهد.
+            </p>
+          </article>
+          <article class="card">
+            <h3>منابع</h3>
+            <p>
+              <a href="https://github.com/github/spec-kit" dir="ltr"
+                >github/spec-kit</a
+              >
+              ·
+              <a href="https://github.github.io/spec-kit/quickstart.html"
+                >Quickstart</a
+              >
+              ·
+              <a
+                href="https://github.github.io/spec-kit/reference/overview.html"
+                >CLI Reference</a
+              >
+            </p>
+          </article>
+          <article class="card">
+            <h3>ویدئو</h3>
+            <p>
+              نمای کلی رسمی:
+              <a href="https://www.youtube.com/watch?v=a9eR1xsfvHg" dir="ltr"
+                >YouTube overview</a
+              >
+            </p>
+          </article>
+        </div>
+        <p class="note">
+          سؤال باز: در تیم شما اولین extension باید bug باشد یا assess؟
+        </p>
+      </section>
+      </div>
+
+      <div class="lang-deck" data-lang="en">
+        <section class="slide is-active" data-slide="1" aria-labelledby="s1-title-en">
+          <p class="kicker">Beyond the SDD fundamentals</p>
+          <h1 id="s1-title-en">Spec Kit operationalizes specifications—it is more than an idea</h1>
+          <p class="lede">
+            We have already explored the philosophy of Spec-Driven Development:
+            specifications become the source of truth, and code becomes their
+            expression. This session focuses on <strong>GitHub Spec Kit</strong>,
+            the open-source toolkit that puts that philosophy into practice with
+            a CLI, templates, and agent commands.
+          </p>
+          <div class="title-meta" aria-label="Presentation metadata">
+            <span class="badge">17 interactive slides</span>
+            <span class="badge">English / LTR</span>
+            <span class="badge">Source: github/spec-kit</span>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <h3>Philosophy</h3>
+              <p>Define before you build. Specifications are executable, not disposable documents.</p>
+            </article>
+            <article class="card">
+              <h3>Tooling</h3>
+              <p><code>specify</code> connects a project to an agent and creates standard artifacts.</p>
+            </article>
+            <article class="card">
+              <h3>Convergence</h3>
+              <p><code>/speckit.converge</code> aligns implementation with the spec and plan until it reports Converged.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="2" aria-labelledby="s2-title-en">
+          <p class="kicker">What is Spec Kit?</p>
+          <h2 id="s2-title-en">A ready-to-use toolkit for any AI coding agent</h2>
+          <p class="lede">
+            Spec Kit provides a ready-made spec-driven process—or lets you bring
+            your own. It is extensible, community-driven, and designed for an
+            entire organization.
+          </p>
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>SDD in general</h3>
+              <p>The power inversion: specifications govern code. Any AI assistant can support it when the team maintains the discipline.</p>
+            </article>
+            <article class="card">
+              <h3>Spec Kit</h3>
+              <p>A practical implementation: CLI, templates, core commands, extensions, presets, and bundles.</p>
+            </article>
+            <article class="card">
+              <h3>Technology independence</h3>
+              <p>SDD is a process, not something tied to a particular language, framework, or technology stack.</p>
+            </article>
+            <article class="card">
+              <h3>Version 1.0</h3>
+              <p>The project has reached 1.0, but its value has shifted from frozen stability to <strong>adaptability</strong>. Check Releases for the current version.</p>
+            </article>
+          </div>
+          <p class="note">
+            Sources: the official README and
+            <a href="https://github.com/github/spec-kit/blob/main/spec-driven.md">spec-driven.md</a>
+          </p>
+        </section>
+
+        <section class="slide" data-slide="3" aria-labelledby="s3-title-en">
+          <p class="kicker">Installation</p>
+          <h2 id="s3-title-en">Prerequisites, the CLI, and <code>specify init</code></h2>
+          <p class="lede">
+            You need Linux, macOS, or Windows; Python 3.11+; Git; and
+            <a href="https://docs.astral.sh/uv/">uv</a> (or pipx). Install the
+            CLI, then initialize your project.
+          </p>
+          <pre>uv tool install specify-cli --from git+https://github.com/github/spec-kit.git@vX.Y.Z
+# Or install from PyPI:
+uv tool install specify-cli
+
+specify init my-project --integration copilot
+cd my-project
+
+specify self check
+specify self upgrade --dry-run
+specify self upgrade</pre>
+          <div class="grid grid-2" style="margin-top: 0.9rem">
+            <article class="card">
+              <h3>Pin the release</h3>
+              <p>Replace <code>vX.Y.Z</code> with the latest tag from <a href="https://github.com/github/spec-kit/releases">Releases</a>, keeping the leading <code>v</code>.</p>
+            </article>
+            <article class="card">
+              <h3>CI and agent harnesses</h3>
+              <p>Use <code>specify init --non-interactive --ignore-agent-tools</code> so a keyboard picker cannot hang. Add <code>--here --force</code> for a non-empty directory.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="4" aria-labelledby="s4-title-en">
+          <p class="kicker">Agents</p>
+          <h2 id="s4-title-en">30+ integrations, but command syntax varies</h2>
+          <p class="lede">
+            Spec Kit works with dozens of CLI and IDE agents. Run
+            <code>specify integration list</code> to see every integration
+            supported by your installed version.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Environment</th><th>Command form</th><th>Note</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Most agents</td><td><code>/speckit.specify</code></td><td>Dot-separated command</td></tr>
+                <tr><td>Codex CLI / skills mode</td><td><code>$speckit-specify</code></td><td>Dollar prefix and hyphen</td></tr>
+                <tr><td>GitHub Copilot CLI</td><td><code>/agents</code> or direct prompt</td><td>Agent selection is separate</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note">
+            The README shows both hyphenated and dotted forms in different
+            contexts. Verify the exact command in your chosen agent before a live
+            demo. Install skills with <code>--integration-options="--skills"</code>.
+          </p>
+        </section>
+
+        <section class="slide" data-slide="5" aria-labelledby="s5-title-en">
+          <p class="kicker">Core workflow</p>
+          <h2 id="s5-title-en">From Constitution to Converge</h2>
+          <p class="lede">
+            Move through the workflow one step at a time. Repeat Implement and
+            Converge until the report says <strong>Converged</strong>.
+          </p>
+          <div class="workflow">
+            <div class="workflow__steps" data-role="workflow-steps"></div>
+            <p class="workflow__detail" data-role="workflow-detail"></p>
+            <div class="workflow__controls">
+              <button type="button" class="ghost" data-workflow="prev">Previous step</button>
+              <button type="button" class="ghost" data-workflow="next">Next step</button>
+              <button type="button" class="ghost" data-workflow="reset">Start over</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="6" aria-labelledby="s6-title-en">
+          <p class="kicker">Core commands</p>
+          <h2 id="s6-title-en">What does each workflow command produce?</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Command</th><th>Agent skill</th><th>Purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>/speckit.constitution</code></td><td><code>speckit-constitution</code></td><td>Project-wide governing principles, established once</td></tr>
+                <tr><td><code>/speckit.specify</code></td><td><code>speckit-specify</code></td><td>WHAT and WHY; spec, branch, and feature number</td></tr>
+                <tr><td><code>/speckit.plan</code></td><td><code>speckit-plan</code></td><td>HOW: technology stack and architecture</td></tr>
+                <tr><td><code>/speckit.tasks</code></td><td><code>speckit-tasks</code></td><td>An actionable task list</td></tr>
+                <tr><td><code>/speckit.taskstoissues</code></td><td><code>speckit-taskstoissues</code></td><td>Convert tasks to GitHub Issues</td></tr>
+                <tr><td><code>/speckit.implement</code></td><td><code>speckit-implement</code></td><td>Execute tasks according to the plan</td></tr>
+                <tr><td><code>/speckit.converge</code></td><td><code>speckit-converge</code></td><td>Find gaps against spec, plan, and tasks; append remaining work</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="7" aria-labelledby="s7-title-en">
+          <p class="kicker">Quality gates</p>
+          <h2 id="s7-title-en">Clarify, Analyze, and Checklist</h2>
+          <div class="grid grid-3" style="margin-bottom: 0.9rem">
+            <article class="card"><h3>Clarify</h3><p>Before Plan. It asks targeted questions about underspecified areas. Formerly <code>/quizme</code>.</p></article>
+            <article class="card"><h3>Analyze</h3><p>After Tasks and before Implement. Checks consistency and coverage across artifacts.</p></article>
+            <article class="card"><h3>Checklist</h3><p>At any point. Think of it as “unit tests for English” applied to requirements.</p></article>
+          </div>
+          <div class="quiz" data-quiz="clarify" data-explain="Clarify belongs before Plan so ambiguity does not leak into technical decisions.">
+            <h3>Question 1 — When should you run Clarify?</h3>
+            <div class="options">
+              <button type="button" class="option" data-correct="true">Before <code>/speckit.plan</code></button>
+              <button type="button" class="option">After <code>/speckit.implement</code></button>
+              <button type="button" class="option">Only after CI fails</button>
+            </div>
+            <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+          </div>
+          <div class="quiz" data-quiz="analyze" data-explain="Analyze checks cross-artifact consistency after Tasks and before Implement." style="margin-top: 0.8rem">
+            <h3>Question 2 — Where does Analyze belong?</h3>
+            <div class="options">
+              <button type="button" class="option">Before Specify</button>
+              <button type="button" class="option" data-correct="true">After Tasks and before Implement</button>
+              <button type="button" class="option">It replaces Converge</button>
+            </div>
+            <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="8" aria-labelledby="s8-title-en">
+          <p class="kicker">Constitution</p>
+          <h2 id="s8-title-en">Architectural DNA in <code>memory/constitution.md</code></h2>
+          <p class="lede">
+            The constitution is the file that holds your project's fixed rules.
+            The agent reads it before every plan, and the plan must pass its
+            Constitutional Compliance section. Every example below applies to the
+            same onboarding feature shown on slide 16.
+          </p>
+          <div class="grid grid-2">
+            <div class="article-list" data-role="articles">
+              <button type="button" class="is-open" data-article="1">Article I — Library-First</button>
+              <p>
+                <span class="rule">Feature logic starts in a standalone package so it can be tested and reused without any UI.</span>
+                <span class="example">
+                  <span class="yes">Do:</span> packages/onboarding → nextStep(), validateStep()<br />
+                  <span class="no">Don't:</span> apps/web/app/onboarding/page.tsx → nextStep()
+                </span>
+              </p>
+              <button type="button" data-article="2">Article II — CLI Interface</button>
+              <p>
+                <span class="rule">That same package must run from a terminal so its behavior is inspectable without a browser: text in, text out, JSON for structured data.</span>
+                <span class="example">onboarding-cli validate --json &lt; profile.json</span>
+              </p>
+              <button type="button" data-article="3">Article III — Test-First <span class="pill">NON-NEGOTIABLE</span></button>
+              <p>
+                <span class="rule">An approved test comes first and must fail before any implementation exists.</span>
+                <span class="example">
+                  1. onboarding.test.ts → expect(nextStep('PROFILE')).toBe('PREFERENCES') → FAIL<br />
+                  2. nextStep() → PASS
+                </span>
+              </p>
+              <button type="button" data-article="4">Article IV — Turborepo Boundaries <span class="pill">PROJECT-DEFINED</span></button>
+              <p>
+                <span class="rule">A component more than one app needs moves to a shared package; a component only one app needs stays inside that app.</span>
+                <span class="example">
+                  <span class="yes">Do:</span> packages/ui/src/Stepper.tsx → apps/web + apps/admin<br />
+                  <span class="no">Don't:</span> apps/web/components/Stepper.tsx + apps/admin/components/Stepper.tsx
+                </span>
+              </p>
+              <button type="button" data-article="5">Article V — RSC and Client Separation <span class="pill">PROJECT-DEFINED</span></button>
+              <p>
+                <span class="rule">Data fetching happens in a Server Component, and <code>'use client'</code> reaches only the interactive leaf.</span>
+                <span class="example">
+                  <span class="yes">Do:</span> app/onboarding/page.tsx → await getOnboardingState()<br />
+                  <span class="yes">Do:</span> OnboardingForm.tsx → 'use client'<br />
+                  <span class="no">Don't:</span> app/onboarding/page.tsx → 'use client'
+                </span>
+              </p>
+            </div>
+            <div class="quiz" data-quiz="constitution" data-explain="The official path is memory/constitution.md, established once per project.">
+              <h3>Question 3 — Where is the Constitution stored?</h3>
+              <div class="options">
+                <button type="button" class="option"><code>specs/constitution.md</code></button>
+                <button type="button" class="option" data-correct="true"><code>memory/constitution.md</code></button>
+                <button type="button" class="option"><code>.github/CONSTITUTION.md</code></button>
+              </div>
+              <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+            </div>
+          </div>
+          <p class="note">
+            Articles I–III come from Spec Kit's own template; your team writes
+            Article IV onward. When a plan violates one of these rules it stops at
+            Phase -1 (the Simplicity, Anti-Abstraction, and Integration-First
+            gates), and the agent must justify it under Complexity Tracking.
+          </p>
+        </section>
+
+        <section class="slide" data-slide="9" aria-labelledby="s9-title-en">
+          <p class="kicker">Specify</p>
+          <h2 id="s9-title-en">What gets created automatically?</h2>
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>Repository automation</h3>
+              <p>The next feature number (001, 002, and beyond 1000), a semantic branch such as <code>003-chat-system</code>, and <code>specs/[branch]/spec.md</code> from a template.</p>
+            </article>
+            <article class="card">
+              <h3>Template rules</h3>
+              <p>Focus on WHAT and WHY—not the tech stack or code structure. Mark uncertainty with <code>[NEEDS CLARIFICATION: question]</code> and self-review for completeness and testability.</p>
+            </article>
+          </div>
+          <pre style="margin-top: 0.9rem">/speckit.specify Build a photo album app grouped by date,
+drag-and-drop reorder, tile preview, no nested albums</pre>
+        </section>
+
+        <section class="slide" data-slide="10" aria-labelledby="s10-title-en">
+          <p class="kicker">Plan, Tasks, and files</p>
+          <h2 id="s10-title-en">Anatomy of the artifacts</h2>
+          <p class="lede">
+            Select a node to see its role. Plan typically generates
+            <code>plan.md</code>, <code>research.md</code>,
+            <code>data-model.md</code>, <code>contracts/</code>, and
+            <code>quickstart.md</code>. Tasks derives <code>tasks.md</code> and
+            marks parallel-safe work with <code>[P]</code>.
+          </p>
+          <div class="tree-layout">
+            <div class="tree" data-role="tree" data-tree="artifacts"></div>
+            <article class="tree-detail card" data-role="tree-detail">
+              <h3>Select a node</h3>
+              <p>Spec Kit separates tooling in <code>.specify/</code> from feature intent in <code>specs/</code>.</p>
+              <hr style="margin: 1rem 0" />
+              <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem">Example contract (data model)</h4>
+              <pre style="font-size: 0.8rem; padding: 0.5rem; background: #1a1a1a; color: #f8f8f2; border-radius: 4px"><code>export enum EOnboardingStep {
+  PROFILE = 'PROFILE',
+  PREFERENCES = 'PREFERENCES'
+}
+
+export type TOnboardingState = {
+  currentStep: EOnboardingStep;
+  isComplete: boolean;
+}
+
+export interface IOnboardingStore {
+  state: TOnboardingState;
+  setStep: (step: EOnboardingStep) =&gt; void;
+}</code></pre>
+            </article>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="11" aria-labelledby="s11-title-en">
+          <p class="kicker">The install folder</p>
+          <h2 id="s11-title-en">What exactly is installed inside <code>.specify/</code>?</h2>
+          <p class="lede">
+            <code>.specify/</code> is Spec Kit's install folder, not your
+            product specs. Select any node to see what that file really does.
+            This tree comes from the actual install in this repository: version
+            1.0.4, the cursor-agent integration, bash scripts.
+          </p>
+          <div class="tree-layout">
+            <div class="tree tree--scroll" data-role="tree" data-tree="install"></div>
+            <article class="tree-detail card" data-role="tree-detail">
+              <h3>Select a file</h3>
+              <p>This folder holds four very different kinds of thing:</p>
+              <ul class="clean">
+                <li>Install configuration at the root: what was installed, for which agent</li>
+                <li>Project law in <code>memory/</code></li>
+                <li>Blank templates in <code>templates/</code></li>
+                <li>Executable scripts in <code>scripts/bash/</code></li>
+              </ul>
+              <p>The two manifests are only install receipts.</p>
+            </article>
+          </div>
+          <p class="note">
+            One detail that matters for this team: because
+            <code>invoke_separator</code> in <code>integration.json</code> is
+            <code>-</code>, our commands are written
+            <code>/speckit-specify</code> while the official documentation shows
+            <code>/speckit.specify</code>. They do the same thing.
+          </p>
+        </section>
+
+        <section class="slide" data-slide="12" aria-labelledby="s12-title-en">
+          <p class="kicker">Scripts</p>
+          <h2 id="s12-title-en">The deterministic half: <code>scripts/bash/</code></h2>
+          <p class="lede">
+            The Cursor skill writes prose; the scripts create paths. Agents call
+            them with <code>--json</code> so they <strong>read</strong> real
+            paths and templates instead of inventing folder names.
+          </p>
+          <pre style="font-size: 0.8rem">     you / Cursor skill  /speckit-specify, /speckit-plan, …
+runs →  .specify/scripts/bash/*.sh        create dirs, check files, resolve paths
+copies →  .specify/templates/*.md         blank markdown
+into   →    specs/001-user-auth/          spec.md · plan.md · tasks.md  ← real artifacts
+gated by →  .specify/memory/constitution.md</pre>
+          <div class="table-wrap" style="margin-top: 0.9rem">
+            <table>
+              <thead>
+                <tr><th>Script</th><th>Caller</th><th>What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>common.sh</code></td>
+                  <td>Every other script</td>
+                  <td>The shared library: finds the project root by walking up to <code>.specify/</code>, resolves the current feature from <code>SPECIFY_FEATURE</code> or <code>feature.json</code>, prints path variables, and resolves templates through overrides → presets → extensions → core.</td>
+                </tr>
+                <tr>
+                  <td><code>create-new-feature.sh</code></td>
+                  <td><code>/speckit-specify</code></td>
+                  <td>Turns the description into a kebab short name, takes the next sequential prefix (001, 002, …), creates <code>specs/&lt;NNN-name&gt;/</code>, copies <code>spec-template.md</code> to <code>spec.md</code>, and writes <code>feature.json</code>.</td>
+                </tr>
+                <tr>
+                  <td><code>setup-plan.sh</code></td>
+                  <td><code>/speckit-plan</code></td>
+                  <td>Resolves the current feature, creates <code>plan.md</code> from the template when missing, and returns the spec, plan, and branch paths as JSON.</td>
+                </tr>
+                <tr>
+                  <td><code>setup-tasks.sh</code></td>
+                  <td><code>/speckit-tasks</code></td>
+                  <td>Fails when <code>spec.md</code> or <code>plan.md</code> is missing—you cannot skip phases. Lists whichever optional design docs exist and returns the composed tasks template.</td>
+                </tr>
+                <tr>
+                  <td><code>check-prerequisites.sh</code></td>
+                  <td>Analyze, Implement, and later steps</td>
+                  <td>The shared gate checker, with <code>--require-spec</code>, <code>--require-tasks</code>, <code>--include-tasks</code>, <code>--paths-only</code>, and <code>--template NAME</code>. Default validation: the feature directory and <code>plan.md</code> must exist.</td>
+                </tr>
+                <tr>
+                  <td><code>resolve-template.sh</code></td>
+                  <td>Skills and extensions</td>
+                  <td>A CLI wrapper around <code>resolve_template_content</code> that prints a named template, so nobody has to copy the bash resolution logic.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="13" aria-labelledby="s13-title-en">
+          <p class="kicker">Our repository today</p>
+          <h2 id="s13-title-en"><code>.specify/</code> next to our existing <code>specs/</code></h2>
+          <p class="lede">
+            This repository already had its own SDD practice. Spec Kit is a
+            second, more generic pipeline—specify → plan → tasks → implement
+            with a constitution gate—and the two layouts do not line up yet.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th></th><th>.specify/</th><th>specs/</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Owner</td><td>The Spec Kit CLI</td><td>Our own product SDD</td></tr>
+                <tr><td>Contents</td><td>Scripts, templates, a stub constitution, manifests</td><td><code>mission.md</code>, <code>tech-stack.md</code>, <code>roadmap.md</code>, feature folders</td></tr>
+                <tr><td>Feature layout</td><td><code>specs/001-short-name/</code> → spec.md · plan.md · tasks.md</td><td><code>specs/features/2026-09-06-…/</code> → spec.md · plan.md · validation.md</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid grid-2" style="margin-top: 0.9rem">
+            <article class="card">
+              <h3>The gap to close</h3>
+              <p>Init chose <code>feature_numbering: sequential</code>, while the existing features use a date plus a nested <code>features/</code> directory. The scripts look for <code>specs/*</code> with an <code>NNN-</code> prefix, not <code>specs/features/YYYY-MM-DD-…</code>. Until we align them, the new <code>/speckit-*</code> skills and the older SDD skill talk past each other.</p>
+            </article>
+            <article class="card">
+              <h3>The practical next step</h3>
+              <p>Fill <code>.specify/memory/constitution.md</code>—or run <code>/speckit-constitution</code>—with our real project rules so <code>/speckit-plan</code> has an actual gate instead of placeholders. Then decide on numbering, or use <code>templates/overrides/</code> to bend the templates toward the structure we already have.</p>
+            </article>
+          </div>
+          <div class="quiz" data-quiz="feature-json" data-explain="feature.json only records which feature you are on right now; it is machine-local state that would conflict between teammates." style="margin-top: 0.9rem">
+            <h3>Question — why is <code>.specify/feature.json</code> gitignored?</h3>
+            <div class="options">
+              <button type="button" class="option" data-correct="true">It points at the current feature on this machine and is rewritten whenever you switch features</button>
+              <button type="button" class="option">It stores agent tokens and other sensitive credentials</button>
+              <button type="button" class="option">It is only created in monorepo mode and is otherwise unused</button>
+            </div>
+            <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="14" aria-labelledby="s14-title-en">
+          <p class="kicker">Customization</p>
+          <h2 id="s14-title-en">How do you make Spec Kit your team's own?</h2>
+          <p class="lede">
+            An <strong>Extension</strong> brings a new capability, a
+            <strong>Preset</strong> reshapes existing output, a
+            <strong>Bundle</strong> installs a whole team role at once, and
+            <strong>Overrides</strong> cover an exception in this project alone.
+            Select each one for a practical, runnable example.
+          </p>
+          <div class="tabs" data-role="custom-tabs">
+            <div class="tabs__buttons" data-role="custom-buttons"></div>
+            <div class="tabs__panel" data-role="custom-panel"></div>
+          </div>
+          <p class="note">
+            Every example uses real components from the Spec Kit repository: the
+            bug and assess extensions, the lean and scaffold presets, and the
+            product-manager example bundle.
+          </p>
+        </section>
+
+        <section class="slide" data-slide="15" aria-labelledby="s15-title-en">
+          <p class="kicker">Live comparison</p>
+          <h2 id="s15-title-en">Scattered prompting versus a Spec Kit audit trail</h2>
+          <p class="lede">
+            Select “Next stage” to reveal the difference in traceability. The
+            official chat example creates its artifacts in roughly 15 minutes;
+            equivalent traditional documentation can take hours.
+          </p>
+          <div class="compare" data-role="compare">
+            <div class="compare__lane">
+              <h3>Ad-hoc prompting</h3>
+              <ol>
+                <li data-step="0">One large prompt to the agent</li>
+                <li data-step="1">Code without a durable specification</li>
+                <li data-step="2">Decisions disappear into chat history</li>
+                <li data-step="3">Manual rewrites when requirements change</li>
+              </ol>
+            </div>
+            <div class="compare__lane">
+              <h3>Spec Kit</h3>
+              <ol>
+                <li data-step="0">Specify focuses on WHAT and WHY</li>
+                <li data-step="1">Plan records technical choices</li>
+                <li data-step="2">Tasks, contracts, and test scenarios live on a branch</li>
+                <li data-step="3">Implement and Converge drive alignment</li>
+              </ol>
+            </div>
+          </div>
+          <div class="compare__controls" style="margin-top: 0.8rem">
+            <button type="button" class="ghost" data-compare="next">Next stage</button>
+            <button type="button" class="ghost" data-compare="reset">Start over</button>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="16" aria-labelledby="s16-title-en">
+          <p class="kicker">End-to-end scenario</p>
+          <h2 id="s16-title-en">A frontend feature, all the way to Converged</h2>
+          <pre>/speckit.specify Multi-step user onboarding form with Yup validation and persisted state
+/speckit.plan Next.js App Router, Zustand global store, React Hook Form
+/speckit.tasks
+/speckit.implement
+/speckit.converge</pre>
+          <ul class="clean">
+            <li>Outputs: spec, plan, research, data model, contracts, quickstart, and tasks—all on the feature branch.</li>
+            <li><code>tasks.md</code> can structure isolated Cypress component tests alongside UI implementation.</li>
+            <li>Repeat steps 4 and 5 until Converge reports <strong>Converged</strong>.</li>
+            <li>For brownfield projects, tooling upgrades are separate from changes to intent in <code>specs/</code>.</li>
+          </ul>
+          <div class="quiz" data-quiz="converge" data-explain="Repeat Implement and Converge until the report says Converged.">
+            <h3>Question 4 — What follows Implement before the feature is done?</h3>
+            <div class="options">
+              <button type="button" class="option">Merge directly to main</button>
+              <button type="button" class="option" data-correct="true">Repeat <code>/speckit.converge</code> until it reports Converged</button>
+              <button type="button" class="option">Rewrite the Constitution</button>
+            </div>
+            <p class="feedback" aria-live="polite" aria-atomic="true"></p>
+          </div>
+        </section>
+
+        <section class="slide" data-slide="17" aria-labelledby="s17-title-en">
+          <p class="kicker">Summary</p>
+          <h2 id="s17-title-en">Process plus tooling—not merely better prompts</h2>
+          <div class="grid grid-2">
+            <article class="card">
+              <h3>The golden path</h3>
+              <p>Constitution → Specify → [Clarify] → Plan → Tasks → [Analyze] → Implement → Converge</p>
+            </article>
+            <article class="card">
+              <h3>Limitations</h3>
+              <p>Command syntax depends on the agent. Articles IV–VI are project-defined. Dogfooding does not cover every pull request.</p>
+            </article>
+            <article class="card">
+              <h3>Resources</h3>
+              <p><a href="https://github.com/github/spec-kit">github/spec-kit</a> · <a href="https://github.github.io/spec-kit/quickstart.html">Quickstart</a> · <a href="https://github.github.io/spec-kit/reference/overview.html">CLI Reference</a></p>
+            </article>
+            <article class="card">
+              <h3>Video</h3>
+              <p>Watch the official <a href="https://www.youtube.com/watch?v=a9eR1xsfvHg">YouTube overview</a>.</p>
+            </article>
+          </div>
+          <p class="note">Open question: should your team's first extension be Bug or Assess?</p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="chrome">
+      <button type="button" class="nav-btn" id="prev">قبلی</button>
+      <button type="button" class="nav-btn" id="next">بعدی</button>
+      <p class="counter" id="counter">۱ / ۱۷</p>
+      <p class="hint">در RTL: ← بعدی · → قبلی · Space بعدی</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
