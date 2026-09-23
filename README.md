@@ -2,6 +2,8 @@
 
 ارائهٔ دوزبانه (فارسی و انگلیسی) درباره [GitHub Spec Kit](https://github.com/github/spec-kit). بدون React یا bundler؛ فقط HTML، CSS و JavaScript خالص.
 
+**نسخه آنلاین:** [https://alirezafarin.github.io/speckit-presentation/](https://alirezafarin.github.io/speckit-presentation/)
+
 ## اجرا
 
 فایل `index.html` را در مرورگر باز کنید، یا از ریشه پروژه:
@@ -11,6 +13,15 @@ python3 -m http.server 5000
 ```
 
 سپس به `http://localhost:5000` بروید.
+
+## GitHub Pages
+
+سایت استاتیک است و از ریشهٔ `main` با GitHub Actions منتشر می‌شود.
+
+1. این تغییرات را commit و push کنید.
+2. در GitHub: **Settings → Pages → Build and deployment → Source** را روی **GitHub Actions** بگذارید (یک‌بار).
+3. اگر workflow از قبل اجرا شده باشد، از تب **Actions** همان workflow را **Re-run** کنید، یا یک commit خالی روی `main` بزنید.
+4. بعد از سبز شدن job، آدرس بالا فعال است. انگلیسی: `?lang=en`
 
 ## تغییر زبان
 
